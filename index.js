@@ -25,6 +25,48 @@ const climates = ['Despejado', 'Nublado', 'Lluvioso'];
             return randomNum + "\u2103";
         }
 
+        function createWeatherWidget(timeOfDay, weather, temperature) {
+            const weatherWidget = document.createElement('article');
+            weatherWidget.classList.add('widget');
+
+            const weatherIcon = document.createElement('div');
+            weatherIcon.classList.add('weatherIcon');
+            weatherWidget.appendChild(weatherIcon);
+
+            const wi = document.createElement('i');
+            wi.classList.add('wi');
+            wi.classList.add('wi-day-sunny');
+            weatherIcon.appendChild(wi);
+
+            const weatherInfo = document.createElement('div');
+            weatherInfo.classList.add('weatherInfo');
+            weatherWidget.appendChild(weatherInfo);
+
+            const temperatureDiv = document.createElement('div');
+            temperatureDiv.classList.add('temperature');
+            weatherInfo.appendChild(temperatureDiv);
+
+            const span = document.createElement('span');
+            span.innerHTML = temperature;
+            temperatureDiv.appendChild(span);
+
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.classList.add('description');
+            weatherInfo.appendChild(descriptionDiv);
+
+            const weatherCondition = document.createElement('div');
+            weatherCondition.classList.add('weatherCondition');
+            weatherCondition.innerHTML = weather;
+            descriptionDiv.appendChild(weatherCondition);
+
+            const dateDiv = document.createElement('div');
+            dateDiv.classList.add('date');
+            dateDiv.innerHTML = timeOfDay;
+            weatherWidget.appendChild(dateDiv);
+
+            return weatherWidget;
+        }
+
         function consultWeather() {
             const timeOfDay = ["Ma\u00F1ana", "Tarde", "Noche"];
             let displayWeather = document.getElementById('display-weather');
@@ -32,21 +74,10 @@ const climates = ['Despejado', 'Nublado', 'Lluvioso'];
             displayWeather.innerHTML = "";
 
             for (let i = 0; i < 3; i++) {
-                // create weather
-                const weatherContainer = document.createElement('div');
-                weatherContainer.classList.add('weather-container');
-                displayWeather.appendChild(weatherContainer);
-
-                const timeWeather = document.createElement('p');
-                timeWeather.textContent = timeOfDay[i];
-                timeWeather.classList.add('time-weather');
-                weatherContainer.appendChild(timeWeather);
-
+                // create weather widget
                 getWeather().then(res => {
-                    const infoWeather = document.createElement('p');
-                    infoWeather.textContent = res + " " + getTemperature();
-                    infoWeather.classList.add('info-weather');
-                    weatherContainer.appendChild(infoWeather);
+                    let weatherWidget = createWeatherWidget(timeOfDay[i], res, getTemperature());
+                    displayWeather.appendChild(weatherWidget);
                 }).catch(err => {
                     alert("No se pudo obtener la informacion del clima");
                 });
