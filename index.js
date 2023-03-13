@@ -26,6 +26,18 @@ const climates = ['Despejado', 'Nublado', 'Lluvioso'];
         }
 
         function createWeatherWidget(timeOfDay, weather, temperature) {
+            const weahterIcons = ["wi-day-sunny", "wi-day-cloudy", "wi-day-hail"];
+            let weathericonclass = weahterIcons[0];
+
+            // Select weather icon
+            if (weather == "Nublado") {
+                weathericonclass = weahterIcons[1];
+            }
+            else if (weather == "Lluvioso") {
+                weathericonclass = weahterIcons[2];
+            }
+            
+
             const weatherWidget = document.createElement('article');
             weatherWidget.classList.add('widget');
 
@@ -35,7 +47,7 @@ const climates = ['Despejado', 'Nublado', 'Lluvioso'];
 
             const wi = document.createElement('i');
             wi.classList.add('wi');
-            wi.classList.add('wi-day-sunny');
+            wi.classList.add(weathericonclass);
             weatherIcon.appendChild(wi);
 
             const weatherInfo = document.createElement('div');
