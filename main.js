@@ -3,8 +3,8 @@ const {app, BrowserWindow} = require('electron');
 // Create window
 function createWindow() {
     const ventana = new BrowserWindow({
-        width: 640, 
-        height: 360
+        width: 960, 
+        height: 540
     });
 
     ventana.loadFile('index.html');
